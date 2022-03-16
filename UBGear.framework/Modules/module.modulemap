@@ -1,0 +1,4 @@
+framework module UBGear {
+  header "UBGear-Swift.h"
+  requires objc
+}
