@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "UBGear"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "Urbanbase library that represented with API and Authentication."
 
   # This description is used to generate tags and improve search results.
