@@ -1,0 +1,752 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)
+// swift-module-flags: -target armv7s-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name UBGear
+import AFNetworking
+import AWSCognitoAuth
+import AWSCognitoIdentityProvider
+import CoreGraphics
+import Foundation
+import SceneKit
+import Swift
+import UIKit
+import _Concurrency
+@available(iOS 11.3, *)
+public class GraphAssetProduct : UBGear.GraphObject {
+  public init(style: UBGear.InteriorStyle? = nil)
+  @objc deinit
+}
+@available(iOS 11.3, *)
+public class GraphMaterialProduct : UBGear.GraphObject {
+  public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(iOS 11.3, *)
+public class UBSpace {
+  public static func requestSignedUrl(token: Swift.String, title: Swift.String = "", isPublic: Swift.Bool = false, imageSize: CoreGraphics.CGSize = CGSize(width: 500, height: 500), completion: @escaping (Swift.Bool, Any?) -> ())
+  public static func uploadImage(signedUrl: Swift.String, capturedImage: UIKit.UIImage, completion: @escaping (Swift.Bool, Any?) -> ())
+  public static func requestAnalyzingSpace(token: Swift.String, uuid: Swift.String, completion: @escaping (Swift.Bool, Any?) -> ())
+  public static func requestModifySpace(token: Swift.String, spaceResult: UBGear.UBSpaceResult, completion: @escaping (Swift.Bool, Any?) -> ())
+  public static func deleteSpaceHistory(token: Swift.String, uuid: Swift.String, completion: @escaping (Swift.Bool, Swift.Error?) -> ())
+  @objc deinit
+}
+@objc @objcMembers public class UBResponse : ObjectiveC.NSObject {
+  @objc public var result: Swift.String? {
+    get
+  }
+  @objc public var responseData: Foundation.NSDictionary? {
+    get
+  }
+  @objc public var message: Swift.String? {
+    get
+  }
+  @objc public init(responseObject: Any)
+  @objc public init(error: Swift.Error)
+  @objc public init(result: Swift.String, message: Swift.String, data: Foundation.NSDictionary?)
+  @objc deinit
+}
+extension UBGear.UBResponse {
+  @objc public static var success: UBGear.UBResponse
+  @objc dynamic public var isSuccess: Swift.Bool {
+    @objc get
+  }
+}
+@_hasMissingDesignatedInitializers @available(iOS 11.3, *)
+@objc open class UBAsset : ObjectiveC.NSObject, UBGear.UBLikeProtocol {
+  public enum AssetType {
+    case product
+    case window
+    case door
+    case architecture
+    public static func == (a: UBGear.UBAsset.AssetType, b: UBGear.UBAsset.AssetType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum PlaneType : Swift.String {
+    case floor
+    case wall
+    case ceil
+    public var description: Swift.String {
+      get
+    }
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @_hasMissingDesignatedInitializers public class Information {
+    public struct Key {
+      public static var k_asset_id: Swift.String
+      public static var k_user_id: Swift.String
+      public static var k_title: Swift.String
+      public static var k_description: Swift.String
+      public static var k_thumbnail_path: Swift.String
+      public static var k_publish: Swift.String
+      public static var k_ar_mode: Swift.String
+      public static var k_likes: Swift.String
+      public static var k_magic_code: Swift.String
+      public static var k_enabled: Swift.String
+      public static var k_created_date: Swift.String
+      public static var k_updated_date: Swift.String
+      public static var k_deleted_date: Swift.String
+      public static var k_views: Swift.String
+      public static var k_ar_views: Swift.String
+      public static var k_model_unit: Swift.String
+      public static var k_m_plane_type_id: Swift.String
+      public static var k_m_asset_type_id: Swift.String
+    }
+    @objc public var asset_id: Swift.String
+    @objc public var user_id: Swift.String
+    @objc public var title: Swift.String
+    @objc public var description: Swift.String
+    @objc public var thumbnail_path: Swift.String
+    @objc public var publish: Swift.Bool
+    @objc public var ar_mode: Swift.Bool
+    @objc public var likes: Swift.Int
+    @objc public var magic_code: Swift.Int
+    @objc public var enabled: Swift.Bool
+    @objc public var created_date: Foundation.Date
+    @objc public var updated_date: Foundation.Date
+    @objc public var deleted_date: Foundation.Date
+    @objc public var views: Swift.Int
+    @objc public var ar_views: Swift.Int
+    @objc public var model_unit: Swift.String
+    public var m_plane_type_id: UBGear.UBAsset.PlaneType
+    public var type: UBGear.UBAsset.AssetType
+    @objc deinit
+  }
+  @_hasMissingDesignatedInitializers public class Format {
+    public var signed_url: Swift.String
+    @objc deinit
+  }
+  @_hasMissingDesignatedInitializers @objc public class UBStyle : ObjectiveC.NSObject {
+    public struct Key {
+      public static var k_id: Swift.String
+      public static var k_asset_id: Swift.String
+      public static var k_name: Swift.String
+      public static var k_enabled: Swift.String
+      public static var k_is_default: Swift.String
+      public static var k_thumbnail_path: Swift.String
+      public static var k_created_date: Swift.String
+      public static var k_updated_date: Swift.String
+      public static var k_deleted_date: Swift.String
+      public static var k_color_chip_path: Swift.String
+      public static var k_materials: Swift.String
+    }
+    @objc public var id: Swift.String
+    @objc public var asset_id: Swift.String
+    @objc public var name: Swift.String
+    @objc public var enabled: Swift.Bool
+    @objc public var is_default: Swift.Bool
+    @objc public var thumbnail_path: Swift.String
+    @objc public var created_date: Foundation.Date
+    @objc public var updated_date: Foundation.Date
+    @objc public var deleted_date: Foundation.Date
+    @objc public var color_chip_path: Swift.String
+    public var materials: [UBGear.UBMaterial]
+    @objc deinit
+  }
+  public struct Key {
+    public static var k_asset: Swift.String
+    public static var k_asset_formats: Swift.String
+    public static var k_asset_styles: Swift.String
+    public static var k_asset_products: Swift.String
+    public static var k_asset_categories: Swift.String
+    public static var k_asset_type: Swift.String
+  }
+  public var format: UBGear.UBAsset.Format?
+  public var assetStyles: [UBGear.UBAsset.UBStyle]
+  public var information: UBGear.UBAsset.Information
+  @objc public var likeInfo: UBGear.UBLikeInfo?
+  public var data: Foundation.NSDictionary
+  @objc public var asset_id: Swift.String {
+    @objc get
+  }
+  @objc public var title: Swift.String {
+    @objc get
+  }
+  @objc public var brand: Swift.String {
+    @objc get
+  }
+  @objc public var thumbnail_path: Swift.String {
+    @objc get
+  }
+  @objc public var isLike: Swift.Bool {
+    @objc get
+    @objc set(newValue)
+  }
+  @objc public var styles: [UBGear.UBAsset.UBStyle] {
+    @objc get
+    @objc set(newValue)
+  }
+  @objc public var asset_description: Swift.String {
+    @objc get
+  }
+  public var type: UBGear.UBAsset.AssetType {
+    get
+  }
+  public init(with response: Foundation.NSDictionary)
+  @objc public func setLikeInformation(with like: UBGear.UBLikeInfo)
+  @objc deinit
+}
+@objc @available(iOS 11.3, *)
+@objcMembers public class UBMaterial : ObjectiveC.NSObject, UBGear.UBLikeProtocol {
+  public struct Key {
+    public static var k_asset_style_id: Swift.String
+    public static var k_geometry: Swift.String
+    public static var k_material: Swift.String
+    public static var k_material_id: Swift.String
+    public static var k_user_id: Swift.String
+    public static var k_enabled: Swift.String
+    public static var k_publish: Swift.String
+    public static var k_thumbnail_path: Swift.String
+    public static var k_data: Swift.String
+    public static var k_created_date: Swift.String
+    public static var k_updated_date: Swift.String
+    public static var k_deleted_date: Swift.String
+    public static var k_title: Swift.String
+    public static var k_description: Swift.String
+    public static var k_m_material_type_id: Swift.String
+    public static var k_material_categories: Swift.String
+    public static var k_material_thumbnails: Swift.String
+    public static var k_material_thumbnails_default: Swift.String
+    public static var k_material_products: Swift.String
+  }
+  @objc public var geometry: Swift.String
+  @objc public var material_id: Swift.String
+  @objc public var thumbnail_path: Swift.String
+  @objc public var responseData: Foundation.NSDictionary
+  public var material_property: UBGear.MaterialProperty?
+  @objc public var title: Swift.String
+  @objc public var materialDescription: Swift.String
+  @objc public var brand: Swift.String {
+    @objc get
+  }
+  @objc public var likeInfo: UBGear.UBLikeInfo?
+  @objc public var isLike: Swift.Bool {
+    @objc get
+    @objc set(newValue)
+  }
+  @objc public init(with response: Foundation.NSDictionary)
+  @objc public func setLikeInformation(with like: UBGear.UBLikeInfo)
+  @objc public static func requestMaterialDetail(materialId: Swift.String, userEmail: Swift.String = "", completion: @escaping (UBGear.UBResponse, UBGear.UBMaterial?) -> Swift.Void)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(iOS 11.3, *)
+public class MaterialProperty {
+  public var map_diffuse: Swift.String
+  public var map_diffuse_repeat: [Foundation.NSNumber]
+  public var map_diffuse_offset: [Foundation.NSNumber]
+  public var map_diffuse_wrapS: SceneKit.SCNWrapMode
+  public var map_diffuse_wrapT: SceneKit.SCNWrapMode
+  public var map_diffuse_anisotropy: Foundation.NSNumber
+  public var map_emissive: Swift.String
+  public var map_light: Swift.String
+  @objc deinit
+}
+@available(iOS 11.3, *)
+extension SceneKit.SCNMaterial {
+  public func setMaterial(material: UBGear.MaterialProperty)
+}
+@available(iOS 11.3, *)
+@objc public protocol UBLikeProtocol {
+  @objc var likeInfo: UBGear.UBLikeInfo? { get set }
+  @objc func setLikeInformation(with like: UBGear.UBLikeInfo)
+}
+@available(iOS 11.3, *)
+@objc public class UBLikeInfo : ObjectiveC.NSObject {
+  public var enabled: Swift.Bool
+  public var created_date: Foundation.Date
+  public var updated_date: Foundation.Date
+  public var user_id: Swift.String
+  public init(with response: Foundation.NSDictionary)
+  @objc deinit
+}
+@objc public enum CategoryType : Swift.Int, Swift.RawRepresentable {
+  case Architecture
+  case Product
+  case Finishes
+  case Migrations
+  case Spatial
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @available(iOS 11.3, *)
+@objcMembers public class UBCategory : ObjectiveC.NSObject {
+  @objc public var id: Swift.String
+  @objc public var is_default: Swift.Bool
+  @objc public var enabled: Swift.Bool
+  @objc public var name: Swift.String
+  @objc public var thumbnail_path: Swift.String
+  @objc public var parent_id: Swift.String
+  @objc public var path: Swift.String
+  @objc public var depth: Swift.Int
+  @objc public var sort: Swift.Int
+  @objc public var code: Swift.String
+  @objc public var subcategories: [UBGear.UBCategory]
+  @objc public var is_endpoint: Swift.Bool
+  @objc public var assets: [UBGear.UBAsset]
+  @objc public var english: Swift.String
+  @objc public var korean: Swift.String
+  @objc public var japanese: Swift.String
+  public struct Key {
+  }
+  @objc public init(response: Foundation.NSDictionary)
+  @objc public init?(with jsonString: Swift.String)
+  @objc public static func requestCategories(type: UBGear.CategoryType, completion: @escaping (UBGear.UBResponse, UBGear.UBCategory?) -> Swift.Void)
+  @objc public static func requestSearchCategory(completion: @escaping (UBGear.UBResponse, [UBGear.UBCategory]?) -> Swift.Void)
+  @objc public static func requestFlattendCategories(type: UBGear.CategoryType, completion: @escaping (UBGear.UBResponse, [UBGear.UBCategory]?) -> Swift.Void)
+  public static func requestAssets(category: UBGear.UBCategory, interiorStyle: UBGear.InteriorStyle? = nil, limit: Swift.Int = 50, offset: Swift.Int = 0, userEmail: Swift.String = "", completion: @escaping (UBGear.UBResponse, [UBGear.UBAsset]?) -> Swift.Void)
+  @objc public static func requestMaterials(category: UBGear.UBCategory, limit: Swift.Int = 50, offset: Swift.Int = 0, userEmail: Swift.String = "", completion: @escaping (UBGear.UBResponse, [UBGear.UBMaterial]?) -> Swift.Void)
+  @objc public static func requestAutoCompletion(keyword: Swift.String, count: Swift.Int = 10, completion: @escaping (UBGear.UBResponse, [UBGear.UBCategory]?) -> Swift.Void)
+  @objc deinit
+}
+public func getApiKey() -> Swift.String?
+@objc @_hasMissingDesignatedInitializers @available(iOS 11.3, *)
+@objcMembers public class UBAssetSet : ObjectiveC.NSObject {
+  @objc public var title: Swift.String
+  @objc public var enabled: Swift.Bool
+  @objc public var publish: Swift.Bool
+  @objc public var thumbnail_path: Swift.String
+  @objc public var assets: [UBGear.UBAsset]
+  @objc deinit
+}
+public var SUCCESS: Swift.String
+public struct UBApi {
+  public static var BASE_URL: Swift.String
+  public static var SERVER: Swift.String
+  public static var CLOUDFRONT_URL: Swift.String
+}
+@available(iOS 11.3, *)
+public class GraphUserLikeAsset : UBGear.GraphObject {
+  public init(email: Swift.String)
+  @objc deinit
+}
+@objc @available(iOS 11.3, *)
+@objcMembers public class UBSpaceResult : ObjectiveC.NSObject, UBGear.UBLikeProtocol {
+  @objc public var data: Foundation.NSDictionary
+  @objc public var id: Swift.String
+  @objc public var uuid: Swift.String
+  @objc public var user_id: Swift.String
+  @objc public var createDate: Foundation.Date?
+  @objc public var deletedDate: Foundation.Date?
+  @objc public var title: Swift.String
+  @objc public var isPublic: Swift.Bool
+  @objc public var image_path: Swift.String
+  @objc public var image_size: CoreGraphics.CGSize
+  @objc public var profile: Swift.String
+  @objc public var username: Swift.String
+  @objc public var classifier_result: [UBGear.SpaceClassifier]
+  @objc public var detector_result: [UBGear.SpaceObjectDetection]
+  @objc public var style_result: [UBGear.SpaceStyle]
+  @objc public var color_result: [UBGear.SpaceColor]
+  @objc public var mainRoomType: UBGear.SpaceClassifier {
+    @objc get
+  }
+  @objc public var mainStyle: UBGear.SpaceStyle {
+    @objc get
+  }
+  @objc public var likeInfo: UBGear.UBLikeInfo?
+  @objc public var isLike: Swift.Bool {
+    @objc get
+    @objc set(newValue)
+  }
+  @objc public var isDeleted: Swift.Bool {
+    @objc get
+  }
+  @objc public init(with data: Foundation.NSDictionary)
+  @objc public func setLikeInformation(with like: UBGear.UBLikeInfo)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class SpaceClassifier : ObjectiveC.NSObject {
+  public enum RoomType {
+    case LivingRoom
+    case Kitchen
+    case Bathroom
+    case Room
+    case DiningRoom
+    case DressingRoom
+    case HomeOffice
+    case Entrance
+    case Balcony
+    public func toString() -> Swift.String
+    public static func == (a: UBGear.SpaceClassifier.RoomType, b: UBGear.SpaceClassifier.RoomType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var type: UBGear.SpaceClassifier.RoomType
+  @objc public var name: Swift.String
+  @objc public var percent: CoreGraphics.CGFloat
+  @objc public init(with result: Foundation.NSDictionary)
+  @objc override dynamic public init()
+  @objc public func percentToString() -> Swift.String
+  @objc deinit
+}
+@objc @objcMembers public class SpaceObjectDetection : ObjectiveC.NSObject {
+  @objc public var name: Swift.String
+  @objc public var percent: CoreGraphics.CGFloat
+  @objc public var rect: CoreGraphics.CGRect
+  @objc public init(with result: Foundation.NSDictionary)
+  @objc public func percentToString() -> Swift.String
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class SpaceStyle : ObjectiveC.NSObject {
+  public enum RoomStyle : Swift.String {
+    case Modern
+    case Romantic
+    case Classic
+    case Natural
+    case Casual
+    case Nordic
+    case Vintage
+    public init(_ string: Swift.String)
+    public func toString() -> Swift.String
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public var name: Swift.String
+  public var style: UBGear.SpaceStyle.RoomStyle
+  @objc public var percent: CoreGraphics.CGFloat
+  @objc public var styleDescription: Swift.String
+  @objc public init(with result: Foundation.NSDictionary)
+  @objc override dynamic public init()
+  @objc public func percentToString() -> Swift.String
+  @objc deinit
+}
+@objc @objcMembers public class SpaceColor : ObjectiveC.NSObject {
+  @objc public var red: CoreGraphics.CGFloat
+  @objc public var green: CoreGraphics.CGFloat
+  @objc public var blue: CoreGraphics.CGFloat
+  @objc public var percent: Swift.Double
+  @objc public init(with result: Foundation.NSDictionary)
+  @objc deinit
+}
+public enum StyleType {
+  case List
+  case Detail
+  public static func == (a: UBGear.StyleType, b: UBGear.StyleType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 11.3, *)
+public class GraphAssetStyle : UBGear.GraphObject {
+  public init(type: UBGear.StyleType = .Detail)
+  @objc deinit
+}
+public typealias GraphKey = Swift.String
+public typealias GraphValue = Any
+public typealias GraphOrder = (key: [UBGear.GraphKey], orderOption: UBGear.SortOrder)
+public typealias GraphConditionKey = Swift.String
+public enum SortOrder {
+  case ASC
+  case DESC
+  public static func == (a: UBGear.SortOrder, b: UBGear.SortOrder) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public class Where {
+  public init(key: UBGear.GraphKey, condition: UBGear.Condition)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public protocol Condition {
+  var key: UBGear.GraphConditionKey { get set }
+  func toString() -> Swift.String
+}
+public class Is : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class GreaterThan : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class GreatherThanEqual : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class LowerThan : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class LowerThanEqual : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class NotEqual : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class Not : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class Between : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var values: [UBGear.GraphValue]
+  public init(value: [UBGear.GraphValue])
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class NotBetween : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var values: [UBGear.GraphValue]
+  public init(value: [UBGear.GraphValue])
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class Like : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class Prefix : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class Suffix : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+public class NotLike : UBGear.Condition {
+  public var key: UBGear.GraphConditionKey
+  public var value: UBGear.GraphValue
+  public init(value: UBGear.GraphValue)
+  public func toString() -> Swift.String
+  @objc deinit
+}
+@available(iOS 11.3, *)
+public class GraphUserLikeSpace : UBGear.GraphObject {
+  public init(email: Swift.String)
+  @objc deinit
+}
+public class GraphObject {
+  public var key: UBGear.GraphKey
+  public var includes: [UBGear.GraphObject]
+  public var wheres: [UBGear.Where]
+  public var orders: [UBGear.GraphOrder]
+  public var attributes: [UBGear.GraphKey]
+  public var limit: Swift.Int
+  public var offset: Swift.Int
+  public init(key: UBGear.GraphKey = "")
+  public func include(_ object: UBGear.GraphObject)
+  public func addAttributes(_ attributes: [UBGear.GraphKey])
+  public func addWhere(_ wheres: [UBGear.Where])
+  public func addOrder(_ order: [UBGear.GraphOrder])
+  public func toString() -> Swift.String
+  public func makeIncludeToString() -> Swift.String
+  public func makeWhereToString() -> Swift.String
+  public func makeAttributeToString() -> Swift.String
+  public func makeOrderToString() -> Swift.String
+  public func makeLimitToString() -> Swift.String
+  public func makeOffsetToString() -> Swift.String
+  @objc deinit
+}
+public struct UBFileAttribute {
+  public static var ETag: Swift.String
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class CacheManager : ObjectiveC.NSObject {
+  @objc public class func executeManagingStroage()
+  @objc public class func sizeOfCachedStorage() -> Swift.Double
+  @objc public class func oldestAsset() -> Foundation.URL?
+  @objc public class func findFigure(uuid: Swift.String, updateDate: Foundation.Date? = nil) -> Foundation.URL?
+  @objc public class func storeItemAsDaei(uuid: Swift.String, data: Foundation.Data, eTag: Swift.String, completion: (Swift.Bool, Swift.Error?) -> Swift.Void)
+  @objc public class func createCacheDirectoryIfNeeded()
+  @objc public class func deleteDirectoryIfNeeded(directory: Foundation.URL)
+  @objc public class func deleteOldestItem(completion: ((Swift.Bool, Swift.String) -> Swift.Void)? = nil)
+  @objc public class func deleteItem(at url: Foundation.URL, completion: (Swift.Bool, Swift.String) -> Swift.Void)
+  @objc public class func deleteItem(uuid: Swift.String, completion: (Swift.Bool, Swift.String) -> Swift.Void)
+  @objc public class func deleteAllItem(completion: (Swift.Bool, Swift.String) -> Swift.Void)
+  @objc public class func getMaterialImage(path: Swift.String) -> UIKit.UIImage?
+  @objc public class func saveMaterialImage(_ image: UIKit.UIImage, key: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@available(iOS 11.3, *)
+open class UBUser {
+  public var id: Swift.String
+  public var email: Swift.String
+  public var nickname: Swift.String
+  public var email_verified: Swift.Bool
+  public var enabled: Swift.Bool
+  public var name: Swift.String
+  public var gender: Swift.String
+  public var picture: Swift.String
+  public var like_assets: [UBGear.UBAsset]
+  public var like_materials: [UBGear.UBMaterial]
+  public var like_spaces: [UBGear.UBSpaceResult]
+  public init(with response: Foundation.NSDictionary)
+  public static func requestUserInfo(token: Swift.String, completion: @escaping (UBGear.UBResponse, UBGear.UBUser?) -> Swift.Void)
+  public static func requestModifyUserInfo(name: Swift.String, token: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  public static func requestSetProfileImage(image: UIKit.UIImage, token: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  public static func requestUpdateUserLanguage(language_id: Swift.Int, token: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  public static func requestUserLike(token: Swift.String, asset_id: Swift.String, completion: @escaping (_ response: UBGear.UBResponse, _ isLike: Swift.Bool) -> Swift.Void)
+  public static func requestUserLike(token: Swift.String, material_id: Swift.String, completion: @escaping (_ response: UBGear.UBResponse, _ isLike: Swift.Bool) -> Swift.Void)
+  public static func requestUserLike(token: Swift.String, space_id: Swift.String, completion: @escaping (_ response: UBGear.UBResponse, _ isLike: Swift.Bool) -> Swift.Void)
+  public static func requestUserSpace(token: Swift.String, completion: @escaping (UBGear.UBResponse, [UBGear.UBSpaceResult]?) -> Swift.Void)
+  public static func requestPublicSpace(limit: Swift.Int = 50, offset: Swift.Int = 0, email: Swift.String = "", completion: @escaping (UBGear.UBResponse, [UBGear.UBSpaceResult]?) -> Swift.Void)
+  public static func requestSpaceResult(spaceId: Swift.String, email: Swift.String = "", completion: @escaping (UBGear.UBResponse, UBGear.UBSpaceResult?) -> Swift.Void)
+  public static func requestMySpaceResult(spaceId: Swift.String, token: Swift.String, email: Swift.String = "", completion: @escaping (UBGear.UBResponse, UBGear.UBSpaceResult?) -> Swift.Void)
+  public static func requestUserLeave(userId: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc deinit
+}
+@available(iOS 11.3, *)
+public class GraphUserLikeMaterial : UBGear.GraphObject {
+  public init(email: Swift.String)
+  @objc deinit
+}
+@available(iOS 11.3, *)
+extension UBGear.UBAsset {
+  public static func searchAssets(with keyword: Swift.String, limit: Swift.Int = 50, offset: Swift.Int = 0, userEmail: Swift.String = "", completion: @escaping (UBGear.UBResponse, [UBGear.UBAsset]?) -> Swift.Void)
+  public static func requestAssetSet(completion: @escaping (UBGear.UBResponse, [UBGear.UBAssetSet]?) -> Swift.Void)
+  public static func requestAsset(asset_id: Swift.String, completion: @escaping (UBGear.UBResponse, UBGear.UBAsset?) -> Swift.Void)
+  public static func requestAssets(completion: @escaping (UBGear.UBResponse, [UBGear.UBAsset]?) -> Swift.Void)
+  public static func requestAssetAutoCompletion(keyword: Swift.String, count: Swift.Int = 10, completion: @escaping (UBGear.UBResponse, [UBGear.UBAsset]?) -> Swift.Void)
+}
+@objc public enum InteriorStyle : Swift.Int, Swift.RawRepresentable {
+  case casual
+  case classic
+  case modern
+  case natural
+  case nordic
+  case romantic
+  case vintage
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @available(iOS 11.3, *)
+@objcMembers open class UBAuth : ObjectiveC.NSObject {
+  public enum LoginType : Swift.String {
+    case Facebook
+    case Google
+    case Apple
+    case Email
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum Language : Swift.Int {
+    case Korean
+    case English
+    case Japanese
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public struct EmailProvider {
+    public enum Status {
+      case confirmed
+      case unconfirmed
+      case external
+      case yet
+      public static func == (a: UBGear.UBAuth.EmailProvider.Status, b: UBGear.UBAuth.EmailProvider.Status) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+    public var email: Swift.String
+    public var password: Swift.String
+    public var status: UBGear.UBAuth.EmailProvider.Status
+    public var id: Swift.String
+    public var enabled: Swift.Bool
+    public init(with info: Foundation.NSDictionary)
+    public init(email: Swift.String)
+  }
+  open var currentUserInformation: UBGear.UBUser?
+  @objc public var currentToken: Swift.String? {
+    @objc get
+  }
+  @objc open func configure(cliendId: Swift.String, clientSecret: Swift.String, poolId: Swift.String, webDomain: Swift.String, appscheme: Swift.String)
+  @objc open func updateCurrentUser()
+  open func signUp(email: Swift.String, password: Swift.String, username: Swift.String, languageCode: UBGear.UBAuth.Language, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc open func signIn(email: Swift.String, password: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  open func signIn(type: UBGear.UBAuth.LoginType, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc open func signOut()
+  open func leave(user: UBGear.UBUser, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc open func leave(userId: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc open func changePassword(current: Swift.String, new: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc open func forgotPassword(userName: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc open func resendConfirmationLink(userName: Swift.String, completion: @escaping (UBGear.UBResponse) -> Swift.Void)
+  @objc public func isLoggedIn() -> Swift.Bool
+  @objc public func isSignedInCognito() -> Swift.Bool
+  @objc public func startSignInFlow(viewController: UIKit.UIViewController)
+  @objc public func isValidEmail(_ email: Swift.String) -> Swift.Bool
+  @objc public func isValidPassword(_ password: Swift.String) -> Swift.Bool
+  public func checkFailReason(password: Swift.String) -> UBGear.UBAuth.PasswordProvider.FailReason
+  public struct PasswordProvider {
+    public enum FailReason {
+      case shortage
+      case decimal
+      case alphabet
+      case special
+      case excess
+      public static func == (a: UBGear.UBAuth.PasswordProvider.FailReason, b: UBGear.UBAuth.PasswordProvider.FailReason) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+@available(iOS 11.3, *)
+extension UBGear.UBAuth : AWSCognitoIdentityProvider.AWSCognitoIdentityInteractiveAuthenticationDelegate {
+  @objc dynamic public func startPasswordAuthentication() -> AWSCognitoIdentityProvider.AWSCognitoIdentityPasswordAuthentication
+}
+@available(iOS 11.3, *)
+extension UBGear.UBAuth : AWSCognitoIdentityProvider.AWSCognitoIdentityPasswordAuthentication {
+  @objc dynamic public func getDetails(_ authenticationInput: AWSCognitoIdentityProvider.AWSCognitoIdentityPasswordAuthenticationInput, passwordAuthenticationCompletionSource: AWSCore.AWSTaskCompletionSource<AWSCognitoIdentityProvider.AWSCognitoIdentityPasswordAuthenticationDetails>)
+  @objc dynamic public func didCompleteStepWithError(_ error: Swift.Error?)
+}
